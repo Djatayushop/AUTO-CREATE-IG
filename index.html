@@ -52,11 +52,11 @@
                         </div>
                         <div>
                             <label class="block text-sm text-gray-500">Username</label>
-                            <div id="username" class="font-medium text-gray-800 mt-1">Not generated yet</div>
+                            <div id="username" class="font-medium text-gray-800 mt-1 cursor-pointer hover:text-indigo-600 transition duration-200" title="Click to copy">Not generated yet</div>
                         </div>
                         <div>
                             <label class="block text-sm text-gray-500">Password</label>
-                            <div class="font-medium text-gray-800 mt-1">BISMILLAH1234</div>
+                            <div class="font-medium text-gray-800 mt-1 cursor-pointer hover:text-indigo-600 transition duration-200" onclick="copyToClipboard('BISMILLAH1234')" title="Click to copy">BISMILLAH1234</div>
                         </div>
                     </div>
                 </div>
@@ -134,9 +134,13 @@
             btn.innerHTML = '<i data-feather="check" class="w-5 h-5 mr-2"></i> Process Completed';
             feather.replace();
             
-            // Redirect to Instagram signup with prefilled data
-            const instagramUrl = `https://www.instagram.com/accounts/emailsignup/?full_name=${encodeURIComponent(randomName)}&username=${encodeURIComponent(username)}&password=BISMILLAH1234`;
-            window.open(instagramUrl, '_blank');
+            // Make data copyable
+            document.getElementById('fullName').onclick = function() {
+                copyToClipboard(randomName);
+            };
+            document.getElementById('username').onclick = function() {
+                copyToClipboard(username);
+            };
             
             // Reset button
             btn.disabled = false;
@@ -150,6 +154,25 @@
         
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            // Show copied notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
+            notification.textContent = 'Copied to clipboard!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 2000);
         }
     </script>
 </body>
