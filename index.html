@@ -77,7 +77,7 @@
 
                 <div class="text-xs text-gray-500 text-center mt-4">
                     <i data-feather="alert-triangle" class="w-4 h-4 inline mr-1"></i>
-                    This is a demo interface. Actual automation would require backend services.
+                    This will open Instagram signup page in a new tab with prefilled data.
                 </div>
             </div>
         </div>
@@ -134,19 +134,18 @@
             btn.innerHTML = '<i data-feather="check" class="w-5 h-5 mr-2"></i> Process Completed';
             feather.replace();
             
-            // Show demo message
-            setTimeout(() => {
-                alert("In a real implementation, this would redirect to Instagram with prefilled data.\n\nFor demo purposes, we're showing the generated data:\n\nFull Name: " + randomName + "\nUsername: " + username + "\nPassword: BISMILLAH1234");
-                
-                // Reset button
-                btn.disabled = false;
-                btn.innerHTML = '<i data-feather="play" class="w-5 h-5 mr-2"></i> Start Again';
-                feather.replace();
-                
-                // Reset progress
-                progressBar.style.width = "0%";
-                status.textContent = "Ready to start again";
-            }, 500);
+            // Redirect to Instagram signup with prefilled data
+            const instagramUrl = `https://www.instagram.com/accounts/emailsignup/?full_name=${encodeURIComponent(randomName)}&username=${encodeURIComponent(username)}&password=BISMILLAH1234`;
+            window.open(instagramUrl, '_blank');
+            
+            // Reset button
+            btn.disabled = false;
+            btn.innerHTML = '<i data-feather="play" class="w-5 h-5 mr-2"></i> Start Again';
+            feather.replace();
+            
+            // Reset progress
+            progressBar.style.width = "0%";
+            status.textContent = "Ready to start again";
         });
         
         function sleep(ms) {
